@@ -88,6 +88,11 @@
 .fi-sidebar-nav {
     padding-inline: 1rem !important;
     padding-block: 1.25rem !important;
+    scrollbar-gutter: auto !important;
+}
+
+.fi-sidebar-nav-groups {
+    margin-inline: 0 !important;
 }
 
 /* Pill-shaped Sidebar Navigation Items */
