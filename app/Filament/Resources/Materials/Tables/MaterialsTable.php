@@ -13,6 +13,7 @@ class MaterialsTable
     public static function configure(Table $table): Table
     {
         return $table
+            ->defaultGroup('material_type')
             ->columns([
                 TextColumn::make('name'),
                 TextColumn::make('material_type'),
