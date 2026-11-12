@@ -21,7 +21,7 @@ class MaterialStockResource extends Resource
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
 
-    protected static string|UnitEnum|null $navigationGroup = 'Master data';
+    protected static string|UnitEnum|null $navigationGroup = 'Gudang';
 
     public static function form(Schema $schema): Schema
     {

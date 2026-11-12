@@ -15,10 +15,10 @@ class MaterialsTable
         return $table
             ->defaultGroup('material_type')
             ->columns([
-                TextColumn::make('name'),
-                TextColumn::make('material_type'),
-                TextColumn::make('unit'),
-                TextColumn::make('description'),
+                TextColumn::make('name')->label('Nama Material'),
+                TextColumn::make('material_type')->label('Jenis Material'),
+                TextColumn::make('unit')->label('Satuan'),
+                TextColumn::make('description')->label('Deskripsi'),
             ])
             ->filters([
                 //

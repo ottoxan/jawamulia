@@ -272,6 +272,65 @@
     background-color: var(--accent-dark-red-soft) !important;
 }
 
+/* Table row action links styled as clear bordered buttons */
+.fi-ta-actions {
+    gap: 0.5rem !important;
+}
+
+.fi-ta-actions .fi-link {
+    padding: 0.375rem 0.75rem !important;
+    border-radius: 0.625rem !important;
+    border: 1px solid rgba(28, 25, 23, 0.14) !important;
+    background-color: #ffffff !important;
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.04) !important;
+    font-size: 0.8125rem !important;
+    font-weight: 600 !important;
+    line-height: 1.25rem !important;
+    text-decoration: none !important;
+    transition: all 150ms cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+.dark .fi-ta-actions .fi-link {
+    background-color: rgba(255, 255, 255, 0.04) !important;
+    border-color: rgba(255, 255, 255, 0.14) !important;
+}
+
+.fi-ta-actions .fi-link.fi-color {
+    border-color: color-mix(in srgb, var(--text) 32%, transparent) !important;
+    background-color: color-mix(in srgb, var(--text) 6%, #ffffff) !important;
+}
+
+.dark .fi-ta-actions .fi-link.fi-color {
+    border-color: color-mix(in srgb, var(--dark-text) 35%, transparent) !important;
+    background-color: color-mix(in srgb, var(--dark-text) 10%, transparent) !important;
+}
+
+.fi-ta-actions .fi-link:not(.fi-disabled):not([disabled]):hover {
+    text-decoration: none !important;
+    transform: translateY(-1px);
+    box-shadow: 0 3px 8px -2px rgba(0, 0, 0, 0.1) !important;
+    border-color: rgba(28, 25, 23, 0.28) !important;
+    background-color: #fafaf9 !important;
+}
+
+.fi-ta-actions .fi-link.fi-color:not(.fi-disabled):not([disabled]):hover {
+    border-color: color-mix(in srgb, var(--text) 55%, transparent) !important;
+    background-color: color-mix(in srgb, var(--text) 13%, #ffffff) !important;
+}
+
+.dark .fi-ta-actions .fi-link.fi-color:not(.fi-disabled):not([disabled]):hover {
+    border-color: color-mix(in srgb, var(--dark-text) 60%, transparent) !important;
+    background-color: color-mix(in srgb, var(--dark-text) 18%, transparent) !important;
+}
+
+.fi-ta-actions .fi-link.fi-disabled,
+.fi-ta-actions .fi-link[disabled] {
+    opacity: 0.45 !important;
+    background-color: rgba(28, 25, 23, 0.04) !important;
+    border-color: rgba(28, 25, 23, 0.1) !important;
+    box-shadow: none !important;
+}
+
 /* 8. Page Header Typography (like "Overview / Saturday, 10 October 2026") */
 .fi-header-heading {
     font-weight: 600 !important;
@@ -282,4 +341,26 @@
 .fi-simple-main {
     border-radius: 1.5rem !important;
     box-shadow: 0 12px 40px -10px rgba(99, 23, 27, 0.12) !important;
+}
+
+/* 10. Modal Polish */
+.fi-modal-window {
+    border: 1px solid rgba(28, 25, 23, 0.08) !important;
+    box-shadow:
+        0 20px 50px -12px rgba(28, 25, 23, 0.18),
+        0 4px 16px -4px rgba(99, 23, 27, 0.08) !important;
+}
+
+.dark .fi-modal-window {
+    border-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+.fi-modal-heading {
+    font-size: 1.0625rem !important;
+    font-weight: 600 !important;
+    letter-spacing: -0.015em !important;
+}
+
+.fi-modal-footer-actions {
+    justify-content: flex-end !important;
 }

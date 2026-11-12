@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Material extends Model
 {
@@ -14,4 +15,9 @@ class Material extends Model
         'unit',
         'description',
     ];
+
+    public function stock(): HasOne
+    {
+        return $this->hasOne(MaterialStock::class);
+    }
 }
