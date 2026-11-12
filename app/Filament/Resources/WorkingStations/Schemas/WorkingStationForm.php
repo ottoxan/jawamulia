@@ -11,9 +11,17 @@ class WorkingStationForm
     {
         return $schema
             ->components([
-                TextInput::make('station_name')
+                TextInput::make('name')
                     ->required()
                     ->maxLength(255),
+                TextInput::make('job')
+                    ->required()
+                    ->maxLength(255),
+                TextInput::make('max_employees')
+                    ->label('Max Employees')
+                    ->numeric()
+                    ->minValue(1)
+                    ->required(),
             ]);
     }
 }

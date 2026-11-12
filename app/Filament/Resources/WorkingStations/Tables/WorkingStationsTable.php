@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\WorkingStations\Tables;
 
+use App\Models\WorkingStation;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
@@ -14,13 +15,22 @@ class WorkingStationsTable
     {
         return $table
             ->columns([
-                TextColumn::make('station_name')
+                TextColumn::make('name')
                     ->searchable()
+                    ->sortable(),
+                TextColumn::make('job')
+                    ->searchable()
+                    ->sortable(),
+                TextColumn::make('max_employees')
+                    ->label('Max Employees')
+                    ->numeric()
                     ->sortable(),
                 TextColumn::make('employees_count')
                     ->counts('employees')
                     ->label('Employees')
-                    ->badge(),
+                    ->formatStateUsing(fn ($state, WorkingStation $record): string => "{$state} / {$record->max_employees}")
+                    ->badge()
+                    ->color(fn ($state, WorkingStation $record): string => $state >= $record->max_employees ? 'danger' : 'success'),
             ])
             ->filters([
                 //

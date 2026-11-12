@@ -13,7 +13,9 @@ return new class extends Migration
     {
         Schema::create('working_station', function (Blueprint $table) {
             $table->id();
-            $table->string('station_name');
+            $table->string('name');
+            $table->string('job');
+            $table->unsignedInteger('max_employees');
             $table->timestamps();
         });
     }

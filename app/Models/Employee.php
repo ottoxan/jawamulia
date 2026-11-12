@@ -28,6 +28,13 @@ class Employee extends Model
         ];
     }
 
+    protected static function booted(): void
+    {
+        static::deleted(function (Employee $employee): void {
+            $employee->user?->delete();
+        });
+    }
+
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class, 'user_id');

@@ -10,8 +10,20 @@ class WorkingStation extends Model
     protected $table = 'working_station';
 
     protected $fillable = [
-        'station_name',
+        'name',
+        'job',
+        'max_employees',
     ];
+
+    /**
+     * @return array<string, string>
+     */
+    protected function casts(): array
+    {
+        return [
+            'max_employees' => 'integer',
+        ];
+    }
 
     public function employees(): HasMany
     {
