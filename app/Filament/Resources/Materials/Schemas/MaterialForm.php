@@ -27,6 +27,7 @@ class MaterialForm
                 TextInput::make('unit')
                     ->required(),
                 Textarea::make('description')
+                    ->columnSpan(2)
                     ->label('Deskripsi'),
             ]);
     }

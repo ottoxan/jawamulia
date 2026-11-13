@@ -19,7 +19,7 @@ class MaterialStockResource extends Resource
 {
     protected static ?string $model = MaterialStock::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedSquare3Stack3d;
 
     protected static string|UnitEnum|null $navigationGroup = 'Gudang';
 

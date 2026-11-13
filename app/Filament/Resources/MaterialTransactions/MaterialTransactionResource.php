@@ -19,7 +19,7 @@ class MaterialTransactionResource extends Resource
 {
     protected static ?string $model = MaterialTransaction::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedArrowsUpDown;
 
     protected static ?string $recordTitleAttribute = 'MaterialTransaction';
 
