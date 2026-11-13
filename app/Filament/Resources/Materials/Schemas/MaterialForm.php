@@ -14,8 +14,10 @@ class MaterialForm
         return $schema
             ->components([
                 TextInput::make('name')
+                    ->label('Nama bahan')
                     ->required(),
                 Select::make('material_type')
+                    ->label('Jenis bahan')
                     ->native(false)
                     ->options([
                         'baku' => 'Bahan Baku',
@@ -24,7 +26,8 @@ class MaterialForm
                     ->required(),
                 TextInput::make('unit')
                     ->required(),
-                Textarea::make('description'),
+                Textarea::make('description')
+                    ->label('Deskripsi'),
             ]);
     }
 }

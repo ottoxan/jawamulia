@@ -16,22 +16,24 @@ class MaterialStocksTable
             ->defaultGroup('material.material_type')
             ->columns([
                 TextColumn::make('Id')
+                    ->toggleable(isToggledHiddenByDefault: true)
                     ->rowIndex(),
                 TextColumn::make('material.name')
-                    ->label('Nama Material')
+                    ->label('Nama Bahan')
                     ->searchable()
                     ->sortable(),
                 TextColumn::make('material.material_type')
-                    ->label('Jenis Material')
+                    ->label('Jenis Bahan')
+                    ->formatStateUsing(fn(string $state): string => match ($state) {
+                        'baku' => 'Bahan Baku',
+                        'penolong' => 'Bahan Penolong',
+                        default => $state,
+                    })
                     ->searchable()
                     ->sortable(),
                 TextColumn::make('quantity')
                     ->label('Jumlah')
                     ->formatStateUsing(fn ($state, $record): string => "{$state} {$record->material?->unit}")
-                    ->searchable()
-                    ->sortable(),
-                TextColumn::make('created_at')
-                    ->label('Dibuat')
                     ->searchable()
                     ->sortable(),
                 TextColumn::make('updated_at')

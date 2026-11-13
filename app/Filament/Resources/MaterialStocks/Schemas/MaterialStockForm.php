@@ -13,7 +13,7 @@ class MaterialStockForm
         return $schema
             ->components([
                 Select::make('material_id')
-                    ->label('Material')
+                    ->label('Bahan')
                     ->relationship('material', 'name')
                     ->searchable()
                     ->native(false)

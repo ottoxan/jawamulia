@@ -23,6 +23,10 @@ class MaterialStockResource extends Resource
 
     protected static string|UnitEnum|null $navigationGroup = 'Gudang';
 
+    protected static ?string $label = 'Stok Bahan';
+
+    protected static ?string $pluralLabel = 'Stok Bahan';
+
     public static function form(Schema $schema): Schema
     {
         return MaterialStockForm::configure($schema);
@@ -44,8 +48,8 @@ class MaterialStockResource extends Resource
     {
         return [
             'index' => ListMaterialStocks::route('/'),
-            'create' => CreateMaterialStock::route('/create'),
-            'edit' => EditMaterialStock::route('/{record}/edit'),
+            // 'create' => CreateMaterialStock::route('/create'),
+            // 'edit' => EditMaterialStock::route('/{record}/edit'),
         ];
     }
 }

@@ -23,6 +23,10 @@ class MaterialTransactionResource extends Resource
 
     protected static ?string $recordTitleAttribute = 'MaterialTransaction';
 
+    protected static ?string $label = 'Transaksi Bahan';
+
+    protected static ?string $pluralLabel = 'Transaksi Bahan';
+
     protected static string|UnitEnum|null $navigationGroup = 'Gudang';
 
     public static function form(Schema $schema): Schema
@@ -46,8 +50,8 @@ class MaterialTransactionResource extends Resource
     {
         return [
             'index' => ListMaterialTransactions::route('/'),
-            'create' => CreateMaterialTransaction::route('/create'),
-            'edit' => EditMaterialTransaction::route('/{record}/edit'),
+            // 'create' => CreateMaterialTransaction::route('/create'),
+            // 'edit' => EditMaterialTransaction::route('/{record}/edit'),
         ];
     }
 }

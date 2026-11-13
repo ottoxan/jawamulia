@@ -15,8 +15,16 @@ class MaterialsTable
         return $table
             ->defaultGroup('material_type')
             ->columns([
-                TextColumn::make('name')->label('Nama Material'),
-                TextColumn::make('material_type')->label('Jenis Material'),
+                TextColumn::make('name')->label('Nama Bahan'),
+                TextColumn::make('material_type')
+                    ->label('Jenis Bahan')
+                    ->formatStateUsing(fn(string $state): string => match ($state) {
+                        'baku' => 'Bahan Baku',
+                        'penolong' => 'Bahan Penolong',
+                        default => $state,
+                    })
+                    ->searchable()
+                    ->sortable(),
                 TextColumn::make('unit')->label('Satuan'),
                 TextColumn::make('description')->label('Deskripsi'),
             ])

@@ -23,13 +23,18 @@ class MaterialTransactionsTable
     {
         return $table
             ->columns([
-                TextColumn::make('id')->label('ID'),
+                TextColumn::make('id')->label('ID')->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('material.name')
-                    ->label('Material')
+                    ->label('Bahan')
                     ->searchable()
                     ->sortable(),
                 TextColumn::make('material.material_type')
-                    ->label('Jenis Material')
+                    ->label('Jenis Bahan')
+                    ->formatStateUsing(fn (string $state): string => match ($state) {
+                        'baku' => 'Bahan Baku',
+                        'penolong' => 'Bahan Penolong',
+                        default => $state,
+                    })
                     ->searchable()
                     ->sortable(),
                 TextColumn::make('quantity')
@@ -39,6 +44,11 @@ class MaterialTransactionsTable
                 TextColumn::make('transaction_type')
                     ->label('Tipe Transaksi')
                     ->badge()
+                    ->icon(fn (string $state): ?string => match ($state) {
+                        'in' => 'heroicon-m-arrow-right-end-on-rectangle',
+                        'out' => 'heroicon-m-arrow-left-start-on-rectangle',
+                        default => null,
+                    })
                     ->formatStateUsing(fn (string $state): string => match ($state) {
                         'in' => 'Masuk',
                         'out' => 'Keluar',
@@ -53,6 +63,12 @@ class MaterialTransactionsTable
                 TextColumn::make('status')
                     ->label('Status')
                     ->badge()
+                    ->icon(fn (string $state): string => match ($state) {
+                        'pending' => 'heroicon-m-clock',
+                        'approved' => 'heroicon-m-check',
+                        'rejected' => 'heroicon-m-x-mark',
+                        default => $state,
+                    })
                     ->formatStateUsing(fn (string $state): string => match ($state) {
                         'pending' => 'Menunngu Konfirmasi',
                         'approved' => 'Disetujui',
@@ -68,6 +84,11 @@ class MaterialTransactionsTable
                 TextColumn::make('creator.name')
                     ->label('Dibuat Oleh')
                     ->searchable()
+                    ->sortable(),
+                TextColumn::make('created_at')
+                    ->label('Dibuat Pada')
+                    ->dateTime('d M y H:i')
+                    ->toggleable(isToggledHiddenByDefault: true)
                     ->sortable(),
             ])
             ->filters([
