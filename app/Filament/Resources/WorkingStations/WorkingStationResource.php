@@ -23,7 +23,13 @@ class WorkingStationResource extends Resource
 
     protected static ?string $recordTitleAttribute = 'name';
 
+    protected static ?string $label = 'Meja Kerja';
+
+    protected static ?string $pluralLabel = 'Meja Kerja';
+
     protected static string|UnitEnum|null $navigationGroup = 'Master data';
+
+    protected static ?int $navigationSort = 2;
 
     public static function form(Schema $schema): Schema
     {

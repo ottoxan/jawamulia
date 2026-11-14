@@ -17,6 +17,7 @@ class ListEmployees extends ListRecords
     {
         return [
             CreateAction::make()
+                ->label('Tambah Karyawan')
                 ->using(function (array $data, string $model): Model {
                     return DB::transaction(function () use ($data, $model): Model {
                         $user = User::create([

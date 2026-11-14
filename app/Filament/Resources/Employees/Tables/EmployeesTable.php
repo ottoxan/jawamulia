@@ -17,6 +17,7 @@ class EmployeesTable
         return $table
             ->columns([
                 TextColumn::make('name')
+                    ->label('Nama Karyawan')
                     ->searchable()
                     ->sortable(),
                 TextColumn::make('user.email')
@@ -25,7 +26,7 @@ class EmployeesTable
                     ->sortable(),
                 TextColumn::make('user.roles.name')
                     ->label('Role')
-                    ->formatStateUsing(fn (string $state): string => match ($state) {
+                    ->formatStateUsing(fn(string $state): string => match ($state) {
                         'prod_admin' => 'Admin Produksi',
                         'raw_admin' => 'Admin Baku',
                         'aux_admin' => 'Admin Penolong',
@@ -35,15 +36,22 @@ class EmployeesTable
                     })
                     ->badge(),
                 TextColumn::make('gender')
+                    ->label('Jenis Kelamin')
+                    ->formatStateUsing(fn(string $state): string => match ($state) {
+                        'laki-laki' => 'Laki-laki',
+                        'perempuan' => 'Perempuan',
+                        default => $state,
+                    })
                     ->badge(),
                 TextColumn::make('dob')
-                    ->label('DOB')
+                    ->label('Tanggal Lahir')
                     ->date()
                     ->sortable(),
                 TextColumn::make('job')
+                    ->label('Pekerjaan')
                     ->searchable(),
                 TextColumn::make('workingStation.name')
-                    ->label('Working Station')
+                    ->label('Meja Kerja')
                     ->badge()
                     ->searchable()
                     ->sortable(),
@@ -73,7 +81,7 @@ class EmployeesTable
 
                                 $record->user->update($userData);
 
-                                if (! empty($data['role'])) {
+                                if (!empty($data['role'])) {
                                     $record->user->syncRoles([$data['role']]);
                                 }
                             }

@@ -26,7 +26,11 @@ class MaterialResource extends Resource
 
     protected static ?string $label = 'Bahan';
 
+    protected static ?string $pluralLabel = 'Bahan';
+
     protected static string|UnitEnum|null $navigationGroup = 'Master data';
+
+    protected static ?int $navigationSort = 3;
 
     public static function getEloquentQuery(): Builder
     {
