@@ -13,6 +13,7 @@ use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
 use UnitEnum;
 
 class MaterialStockResource extends Resource
@@ -26,6 +27,18 @@ class MaterialStockResource extends Resource
     protected static ?string $label = 'Stok Bahan';
 
     protected static ?string $pluralLabel = 'Stok Bahan';
+
+    public static function getEloquentQuery(): Builder
+    {
+        $query = parent::getEloquentQuery();
+        $user = auth()->user();
+
+        if ($user?->hasRole('raw_admin') && ! $user->hasRole('super_admin')) {
+            $query->whereRelation('material', 'material_type', 'baku');
+        }
+
+        return $query;
+    }
 
     public static function form(Schema $schema): Schema
     {
