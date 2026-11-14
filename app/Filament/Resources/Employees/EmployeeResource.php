@@ -29,6 +29,8 @@ class EmployeeResource extends Resource
 
     protected static string|UnitEnum|null $navigationGroup = 'Master data';
 
+    protected static ?int $navigationSort = 1;
+
     public static function form(Schema $schema): Schema
     {
         return EmployeeForm::configure($schema);

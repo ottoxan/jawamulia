@@ -29,6 +29,8 @@ class MaterialResource extends Resource
 
     protected static string|UnitEnum|null $navigationGroup = 'Master data';
 
+    protected static ?int $navigationSort = 3;
+
     public static function form(Schema $schema): Schema
     {
         return MaterialForm::configure($schema);

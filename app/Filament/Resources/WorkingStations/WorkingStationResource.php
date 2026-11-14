@@ -29,6 +29,8 @@ class WorkingStationResource extends Resource
 
     protected static string|UnitEnum|null $navigationGroup = 'Master data';
 
+    protected static ?int $navigationSort = 2;
+
     public static function form(Schema $schema): Schema
     {
         return WorkingStationForm::configure($schema);
