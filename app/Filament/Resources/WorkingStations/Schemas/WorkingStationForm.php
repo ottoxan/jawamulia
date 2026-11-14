@@ -12,13 +12,15 @@ class WorkingStationForm
         return $schema
             ->components([
                 TextInput::make('name')
+                    ->label('Nama Meja')
                     ->required()
                     ->maxLength(255),
                 TextInput::make('job')
+                    ->label('Pekerjaan')
                     ->required()
                     ->maxLength(255),
                 TextInput::make('max_employees')
-                    ->label('Max Employees')
+                    ->label('Maksimal Karyawan')
                     ->numeric()
                     ->minValue(1)
                     ->required(),

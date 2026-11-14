@@ -23,6 +23,10 @@ class EmployeeResource extends Resource
 
     protected static ?string $recordTitleAttribute = 'name';
 
+    protected static ?string $label = 'Karyawan';
+
+    protected static ?string $pluralLabel = 'Karyawan';
+
     protected static string|UnitEnum|null $navigationGroup = 'Master data';
 
     public static function form(Schema $schema): Schema

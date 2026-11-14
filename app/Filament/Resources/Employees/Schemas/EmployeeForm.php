@@ -22,6 +22,7 @@ class EmployeeForm
             ->components([
                 Group::make([
                     TextInput::make('name')
+                        ->label('Nama Karyawan')
                         ->autocomplete('off')
                         ->required()
                         ->maxLength(255),
@@ -34,16 +35,18 @@ class EmployeeForm
                         ->unique(
                             table: User::class,
                             column: 'email',
-                            ignorable: fn (?Employee $record): ?User => $record?->user,
+                            ignorable: fn(?Employee $record): ?User => $record?->user,
                         ),
                     TextInput::make('password')
+                        ->label('Password')
                         ->password()
                         ->revealable()
                         ->autocomplete('new-password')
-                        ->required(fn (string $operation): bool => $operation === 'create')
-                        ->dehydrated(fn (?string $state): bool => filled($state))
+                        ->required(fn(string $operation): bool => $operation === 'create')
+                        ->dehydrated(fn(?string $state): bool => filled($state))
                         ->maxLength(255),
                     Select::make('gender')
+                        ->label('Jenis Kelamin')
                         ->native(false)
                         ->options([
                             'laki-laki' => 'Laki-laki',
@@ -53,9 +56,10 @@ class EmployeeForm
                 ]),
                 Group::make([
                     Select::make('role')
-                        ->options(fn (): array => Role::query()
+                        ->label('Role')
+                        ->options(fn(): array => Role::query()
                             ->pluck('name', 'name')
-                            ->map(fn (string $name): string => match ($name) {
+                            ->map(fn(string $name): string => match ($name) {
                                 'prod_admin' => 'Admin Produksi',
                                 'raw_admin' => 'Admin Baku',
                                 'aux_admin' => 'Admin Penolong',
@@ -69,34 +73,36 @@ class EmployeeForm
                         ->preload()
                         ->required(),
                     TextInput::make('job')
+                        ->label('Pekerjaan')
                         ->autocomplete('off')
                         ->required()
                         ->maxLength(255),
                     DatePicker::make('dob')
-                        ->label('DOB')
+                        ->label('Tanggal Lahir')
                         ->native(false)
                         ->required(),
                     Select::make('station_id')
+                        ->label('Meja Kerja')
                         ->relationship('workingStation', 'name')
-                        ->getOptionLabelFromRecordUsing(fn (WorkingStation $record): string => "{$record->name} ({$record->job}) - {$record->employees()->count()}/{$record->max_employees}")
+                        ->getOptionLabelFromRecordUsing(fn(WorkingStation $record): string => "{$record->name} ({$record->job}) - {$record->employees()->count()}/{$record->max_employees}")
                         ->native(false)
                         ->searchable()
                         ->preload()
                         ->required()
                         ->rules([
-                            fn (?Employee $record): Closure => function (string $attribute, $value, Closure $fail) use ($record): void {
+                            fn(?Employee $record): Closure => function (string $attribute, $value, Closure $fail) use ($record): void {
                                 $station = WorkingStation::find($value);
 
-                                if (! $station) {
+                                if (!$station) {
                                     return;
                                 }
 
                                 $currentCount = $station->employees()
-                                    ->when($record, fn ($query) => $query->whereKeyNot($record->getKey()))
+                                    ->when($record, fn($query) => $query->whereKeyNot($record->getKey()))
                                     ->count();
 
                                 if ($currentCount >= $station->max_employees) {
-                                    $fail("Working station {$station->name} sudah penuh (maksimal {$station->max_employees} karyawan).");
+                                    $fail("Meja Kerja {$station->name} sudah penuh (maksimal {$station->max_employees} karyawan).");
                                 }
                             },
                         ]),

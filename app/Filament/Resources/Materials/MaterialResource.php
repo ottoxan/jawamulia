@@ -25,6 +25,8 @@ class MaterialResource extends Resource
 
     protected static ?string $label = 'Bahan';
 
+    protected static ?string $pluralLabel = 'Bahan';
+
     protected static string|UnitEnum|null $navigationGroup = 'Master data';
 
     public static function form(Schema $schema): Schema

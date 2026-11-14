@@ -16,21 +16,23 @@ class WorkingStationsTable
         return $table
             ->columns([
                 TextColumn::make('name')
+                    ->label('Nama Meja')
                     ->searchable()
                     ->sortable(),
                 TextColumn::make('job')
+                    ->label('Pekerjaan')
                     ->searchable()
                     ->sortable(),
                 TextColumn::make('max_employees')
-                    ->label('Max Employees')
+                    ->label('Maksimal Karyawan')
                     ->numeric()
                     ->sortable(),
                 TextColumn::make('employees_count')
                     ->counts('employees')
-                    ->label('Employees')
-                    ->formatStateUsing(fn ($state, WorkingStation $record): string => "{$state} / {$record->max_employees}")
+                    ->label('Jumlah Karyawan')
+                    ->formatStateUsing(fn($state, WorkingStation $record): string => "{$state} / {$record->max_employees}")
                     ->badge()
-                    ->color(fn ($state, WorkingStation $record): string => $state >= $record->max_employees ? 'danger' : 'success'),
+                    ->color(fn($state, WorkingStation $record): string => $state >= $record->max_employees ? 'danger' : 'success'),
             ])
             ->filters([
                 //
