@@ -38,4 +38,9 @@ class Product extends Model
     {
         return $this->hasMany(ProductTransaction::class, 'product_id');
     }
+
+    public function bomItems(): HasMany
+    {
+        return $this->hasMany(BomItem::class, 'product_id');
+    }
 }
