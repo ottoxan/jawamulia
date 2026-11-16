@@ -32,6 +32,14 @@ class ListMaterialTransactions extends ListRecords
             ];
         }
 
+        if ($user?->hasRole('aux_admin') && ! $user->hasRole('super_admin')) {
+            return [
+                'penolong' => Tab::make('Bahan Penolong')
+                    ->modifyQueryUsing(fn (Builder $query): Builder => $query->whereRelation('material', 'material_type', 'penolong'))
+                    ->badge(MaterialTransaction::query()->whereRelation('material', 'material_type', 'penolong')->count()),
+            ];
+        }
+
         return [
             'all' => Tab::make('Semua')
                 ->badge(MaterialTransaction::query()->count()),

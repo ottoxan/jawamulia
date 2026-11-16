@@ -29,6 +29,14 @@ class ListMaterialStocks extends ListRecords
                     ->badge(MaterialStock::query()->whereRelation('material', 'material_type', 'baku')->count()),
             ];
         }
+        
+        if ($user?->hasRole('aux_admin') && ! $user->hasRole('super_admin')) {
+            return [
+                'penolong' => Tab::make('Bahan Penolong')
+                    ->modifyQueryUsing(fn (Builder $query): Builder => $query->whereRelation('material', 'material_type', 'penolong'))
+                    ->badge(MaterialStock::query()->whereRelation('material', 'material_type', 'penolong')->count()),
+            ];
+        }
 
         return [
             'all' => Tab::make('Semua')

@@ -38,6 +38,10 @@ class MaterialTransactionResource extends Resource
         if ($user?->hasRole('raw_admin') && ! $user->hasRole('super_admin')) {
             $query->whereRelation('material', 'material_type', 'baku');
         }
+        
+        if ($user?->hasRole('aux_admin') && ! $user->hasRole('super_admin')) {
+            $query->whereRelation('material', 'material_type', 'penolong');
+        }
 
         return $query;
     }

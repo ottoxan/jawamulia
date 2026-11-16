@@ -31,6 +31,13 @@ class ListMaterials extends ListRecords
                     ->badge(Material::query()->where('material_type', 'baku')->count()),
             ];
         }
+        if ($user?->hasRole('aux_admin') && ! $user->hasRole('super_admin')) {
+            return [
+                'penolong' => Tab::make('Bahan Penolong')
+                    ->modifyQueryUsing(fn (Builder $query): Builder => $query->where('material_type', 'penolong'))
+                    ->badge(Material::query()->where('material_type', 'penolong')->count()),
+            ];
+        }
 
         return [
             'all' => Tab::make('Semua')
