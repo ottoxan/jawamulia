@@ -29,6 +29,18 @@ class ProductTransactionResource extends Resource
 
     protected static string|UnitEnum|null $navigationGroup = 'Gudang';
 
+    public static function canViewAny(): bool
+    {
+        return (auth()->user()?->hasAnyRole(['super_admin', 'prod_admin', 'mkt_admin']) ?? false)
+            && parent::canViewAny();
+    }
+
+    public static function canCreate(): bool
+    {
+        return (auth()->user()?->hasAnyRole(['super_admin', 'prod_admin']) ?? false)
+            && parent::canCreate();
+    }
+
     public static function form(Schema $schema): Schema
     {
         return ProductTransactionForm::configure($schema);

@@ -6,7 +6,6 @@ use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Tables\Columns\TextColumn;
-use Filament\Tables\Grouping\Group;
 use Filament\Tables\Table;
 
 class ProductsTable
@@ -14,15 +13,6 @@ class ProductsTable
     public static function configure(Table $table): Table
     {
         return $table
-            ->defaultGroup(
-                Group::make('product_type')
-                    ->titlePrefixedWithLabel(false)
-                    ->getTitleFromRecordUsing(fn ($record): string => match ($record->product_type) {
-                        'semi-finished' => 'Setengah Jadi',
-                        'finished' => 'Barang Jadi',
-                        default => (string) ($record->product_type ?? '-'),
-                    })
-            )
             ->columns([
                 TextColumn::make('code')
                     ->label('Kode Produk')

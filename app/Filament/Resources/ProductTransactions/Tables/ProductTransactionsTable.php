@@ -22,6 +22,7 @@ class ProductTransactionsTable
     public static function configure(Table $table): Table
     {
         return $table
+            ->checkIfRecordIsSelectableUsing(fn (ProductTransaction $record): bool => $record->status !== 'approved')
             ->columns([
                 TextColumn::make('id')->label('ID')->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('product.code')
@@ -126,7 +127,7 @@ class ProductTransactionsTable
                     ->label('Setujui')
                     ->icon('heroicon-o-check-circle')
                     ->color('success')
-                    ->visible(fn (ProductTransaction $record): bool => $record->status === 'pending')
+                    ->visible(fn (ProductTransaction $record): bool => $record->status === 'pending' && (auth()->user()?->hasAnyRole(['super_admin', 'mkt_admin']) ?? false))
                     ->disabled(function (ProductTransaction $record): bool {
                         if ($record->transaction_type !== 'out') {
                             return false;
@@ -154,6 +155,8 @@ class ProductTransactionsTable
                     ->modalDescription('Apakah Anda yakin ingin menyetujui transaksi ini? Stok produk akan diperbarui secara otomatis.')
                     ->modalSubmitActionLabel('Ya, Setujui')
                     ->action(function (ProductTransaction $record): void {
+                        abort_unless(auth()->user()?->hasAnyRole(['super_admin', 'mkt_admin']), 403);
+
                         DB::transaction(function () use ($record): void {
                             $stock = ProductStock::firstOrCreate(
                                 [
@@ -193,7 +196,7 @@ class ProductTransactionsTable
                     ->label('Tolak')
                     ->icon('heroicon-o-x-circle')
                     ->color('danger')
-                    ->visible(fn (ProductTransaction $record): bool => $record->status === 'pending')
+                    ->visible(fn (ProductTransaction $record): bool => $record->status === 'pending' && (auth()->user()?->hasAnyRole(['super_admin', 'mkt_admin']) ?? false))
                     ->modalHeading('Tolak Transaksi Produk')
                     ->modalDescription('Silakan masukkan alasan penolakan transaksi ini.')
                     ->modalSubmitActionLabel('Tolak Transaksi')
@@ -207,6 +210,8 @@ class ProductTransactionsTable
                             ->rows(3),
                     ])
                     ->action(function (ProductTransaction $record, array $data): void {
+                        abort_unless(auth()->user()?->hasAnyRole(['super_admin', 'mkt_admin']), 403);
+
                         $record->update([
                             'status' => 'rejected',
                             'notes' => $data['notes'],
@@ -218,11 +223,20 @@ class ProductTransactionsTable
                             ->send();
                     }),
                 EditAction::make()
-                    ->visible(fn (ProductTransaction $record): bool => $record->status === 'pending'),
+                    ->label(fn (ProductTransaction $record): string => $record->status === 'rejected' ? 'Revisi' : 'Ubah')
+                    ->visible(fn (ProductTransaction $record): bool => in_array($record->status, ['pending', 'rejected'], true) && (auth()->user()?->hasAnyRole(['super_admin', 'prod_admin']) ?? false))
+                    ->mutateDataUsing(function (array $data, ProductTransaction $record): array {
+                        if ($record->status === 'rejected') {
+                            $data['status'] = 'pending';
+                        }
+
+                        return $data;
+                    }),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([
-                    DeleteBulkAction::make(),
+                    DeleteBulkAction::make()
+                        ->authorizeIndividualRecords('delete'),
                 ]),
             ]);
     }

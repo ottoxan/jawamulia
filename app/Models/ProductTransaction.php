@@ -29,6 +29,13 @@ class ProductTransaction extends Model
         ];
     }
 
+    protected static function booted(): void
+    {
+        static::deleting(function (ProductTransaction $transaction): bool {
+            return $transaction->status !== 'approved';
+        });
+    }
+
     public function product(): BelongsTo
     {
         return $this->belongsTo(Product::class, 'product_id');

@@ -4,14 +4,14 @@ declare(strict_types=1);
 
 namespace App\Policies;
 
-use Illuminate\Foundation\Auth\User as AuthUser;
 use App\Models\ProductTransaction;
 use Illuminate\Auth\Access\HandlesAuthorization;
+use Illuminate\Foundation\Auth\User as AuthUser;
 
 class ProductTransactionPolicy
 {
     use HandlesAuthorization;
-    
+
     public function viewAny(AuthUser $authUser): bool
     {
         return $authUser->can('ViewAny:ProductTransaction');
@@ -34,7 +34,8 @@ class ProductTransactionPolicy
 
     public function delete(AuthUser $authUser, ProductTransaction $productTransaction): bool
     {
-        return $authUser->can('Delete:ProductTransaction');
+        return $productTransaction->status !== 'approved'
+            && $authUser->can('Delete:ProductTransaction');
     }
 
     public function deleteAny(AuthUser $authUser): bool
@@ -71,5 +72,4 @@ class ProductTransactionPolicy
     {
         return $authUser->can('Reorder:ProductTransaction');
     }
-
 }

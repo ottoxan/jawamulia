@@ -31,6 +31,12 @@ class ProductResource extends Resource
 
     protected static ?int $navigationSort = 4;
 
+    public static function canViewAny(): bool
+    {
+        return (auth()->user()?->hasAnyRole(['super_admin', 'prod_admin', 'mkt_admin']) ?? false)
+            && parent::canViewAny();
+    }
+
     public static function form(Schema $schema): Schema
     {
         return ProductForm::configure($schema);
